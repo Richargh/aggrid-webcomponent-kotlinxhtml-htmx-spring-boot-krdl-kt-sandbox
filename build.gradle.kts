@@ -37,6 +37,11 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
+springBoot {
+	mainClass.set("de.richargh.sandbox.aggrid.ApplicationKt")
+}
+
+
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
