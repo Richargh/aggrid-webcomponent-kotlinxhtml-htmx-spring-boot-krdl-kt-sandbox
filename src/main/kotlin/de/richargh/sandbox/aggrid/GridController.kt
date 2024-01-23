@@ -1,6 +1,11 @@
 package de.richargh.sandbox.aggrid
 
-import kotlinx.html.*
+import de.richargh.sandbox.aggrid.components.div
+import de.richargh.sandbox.aggrid.components.myAgGrid
+import kotlinx.html.h1
+import kotlinx.html.id
+import kotlinx.html.script
+import kotlinx.html.style
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
@@ -10,11 +15,14 @@ class GridController {
     @GetMapping("/")
     fun index() = html(BasePage.render {
         h1 { +"Ag Grid Demo" }
-        div(classes = "ag-theme-quartz") {
-            style = "height: 100%"
-            id = "myGrid"
+
+        myAgGrid {
+            div(classes = "ag-theme-quartz") {
+                style = "height: 100%"
+                id = "myGrid"
+            }
         }
-        script(type = "text/javascript", src = "/app/js/main.js") {
+        script(type = "text/javascript", src = "/app/components/my-ag-grid.mjs") {
             defer = true
         }
     })

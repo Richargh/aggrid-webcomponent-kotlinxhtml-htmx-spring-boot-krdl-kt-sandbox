@@ -51,10 +51,14 @@ const serverSideDataSource = {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    const gridDiv = document.querySelector('#myGrid');
-    gridApi = agGrid.createGrid(gridDiv, gridOptions);
-    gridApi.setGridOption('serverSideDatasource', serverSideDataSource);
+customElements.define("my-ag-grid", class extends HTMLElement {
+
+    connectedCallback() {
+        const gridDiv = this.querySelector('#myGrid');
+        gridApi = agGrid.createGrid(gridDiv, gridOptions);
+        gridApi.setGridOption('serverSideDatasource', serverSideDataSource);
+    }
+
 });
 
 /**
