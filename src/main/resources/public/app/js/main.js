@@ -17,6 +17,11 @@ const gridOptions = {
         minWidth: 100,
     },
 
+    pagination: true,
+    paginationPageSize: 50,
+    // allows the user to select the page size from a predefined list of page sizes
+    paginationPageSizeSelector: [10, 20, 50, 100],
+
     rowModelType: 'serverSide',
 };
 
