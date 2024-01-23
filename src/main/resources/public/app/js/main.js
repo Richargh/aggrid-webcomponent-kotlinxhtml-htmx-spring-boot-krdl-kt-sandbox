@@ -18,9 +18,10 @@ const gridOptions = {
     },
 
     pagination: true,
-    paginationPageSize: 50,
     // allows the user to select the page size from a predefined list of page sizes
-    paginationPageSizeSelector: [10, 20, 50, 100],
+    paginationPageSizeSelector: [5, 10, 20],
+    paginationPageSize: 5,
+    cacheBlockSize: 10, // how many rows are requested from server
 
     rowModelType: 'serverSide',
 };
@@ -30,14 +31,16 @@ const serverSideDataSource = {
     getRows: (params) => {
         console.log('[Datasource] - rows requested by grid: ', params.request);
 
-        fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
+        fetch('/data?' + new URLSearchParams({
+            startRow: params.request.startRow,
+            endRow: params.request.endRow,
+        }))
             .then((response) => response.json())
             .then(function (data) {
-                console.log(data);
-
                 /** @type {LoadSuccessParams} **/
                 const successData = {
-                    rowData: data.slice(params.request.startRow, params.request.endRow),
+                    rowData: data.rows,
+                    rowCount: data.total
                 };
                 params.success(successData);
             })
