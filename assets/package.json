@@ -4,8 +4,11 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "npm run build:htmx && npm run build:simplecss",
-    "build:aggrid": "cp node_modules/ag-grid-enterprise/ htmx.org/dist/htmx.min.js ../src/main/resources/public/htmx.min.js"
+    "dist": "npm run dist:aggrid",
+    "dist:aggrid": "npm run dist:aggrid:code && npm run dist:aggrid:style && npm run dist:aggrid:theme",
+    "dist:aggrid:code": "cp node_modules/ag-grid-enterprise/dist/ag-grid-enterprise.esm.min.js ../src/main/resources/public/ag-grid-enterprise",
+    "dist:aggrid:style": "cp node_modules/ag-grid-enterprise/styles/ag-grid.min.css ../src/main/resources/public/ag-grid-enterprise",
+    "dist:aggrid:theme": "cp node_modules/ag-grid-enterprise/styles/ag-theme-quartz.min.css ../src/main/resources/public/ag-grid-enterprise"
   },
   "keywords": [],
   "author": "",

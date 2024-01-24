@@ -11,12 +11,22 @@ class BasePage {
                     head {
                         meta { charset = "utf-8" }
                         meta { name = "viewport"; this.content = "width=device-width, initial-scale=1" }
+                        link(rel = "stylesheet", href = "/ag-grid-enterprise/ag-grid.min.css")
+                        link(rel = "stylesheet", href = "/ag-grid-enterprise/ag-theme-quartz.min.css")
+                        link(rel = "stylesheet", href = "/ag-grid-enterprise/ag-theme-custom.css")
                         title { +"AgGrid Sandbox" }
-                        script(
-                            type = "text/javascript",
-                            src = "https://cdn.jsdelivr.net/npm/ag-grid-enterprise@31.0.2/dist/ag-grid-enterprise.min.js"
-                        ) {
-                            defer = true
+                        script(type = "importmap") {
+                            unsafe {
+                                raw(
+                                    """
+                                {
+                                    "imports": {
+                                        "ag-grid-enterprise": "/ag-grid-enterprise/ag-grid-enterprise.esm.min.js"
+                                    }
+                                }
+                            """.trimIndent()
+                                )
+                            }
                         }
                     }
                     body {

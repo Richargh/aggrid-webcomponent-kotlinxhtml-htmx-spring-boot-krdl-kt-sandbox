@@ -17,14 +17,12 @@ class GridController {
         h1 { +"Ag Grid Demo" }
 
         myAgGrid {
-            div(classes = "ag-theme-quartz") {
+            div(classes = "ag-theme-quartz ag-theme-custom") {
                 style = "height: 100%"
                 id = "myGrid"
             }
         }
-        script(type = "text/javascript", src = "/app/components/my-ag-grid.mjs") {
-            defer = true
-        }
+        script(type = "module", src = "/app/components/my-ag-grid.js") {}
     })
 
     @ResponseBody

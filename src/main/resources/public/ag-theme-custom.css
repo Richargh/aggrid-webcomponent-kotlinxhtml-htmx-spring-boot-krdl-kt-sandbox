@@ -1,0 +1,7 @@
+.ag-theme-custom {
+    --ag-odd-row-background-color: #aaa;
+
+    --ag-header-height: 30px;
+    --ag-header-cell-hover-background-color: rgb(255, 40, 140);
+    --ag-header-cell-moving-background-color: rgb(255, 40, 140);
+}

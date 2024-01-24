@@ -1,3 +1,46 @@
+import {
+    AdvancedFilterModule,
+    ClientSideRowModelModule,
+    ClipboardModule,
+    ColumnsToolPanelModule,
+    createGrid,
+    ExcelExportModule,
+    FiltersToolPanelModule,
+    GridChartsModule,
+    MasterDetailModule,
+    MenuModule,
+    MultiFilterModule,
+    RangeSelectionModule,
+    RichSelectModule,
+    RowGroupingModule,
+    ServerSideRowModelModule,
+    SetFilterModule,
+    SideBarModule,
+    StatusBarModule,
+    ViewportRowModelModule,
+} from 'ag-grid-enterprise';
+
+const gridModules = [
+    AdvancedFilterModule,
+    ClientSideRowModelModule,
+    GridChartsModule,
+    ClipboardModule,
+    ColumnsToolPanelModule,
+    ExcelExportModule,
+    FiltersToolPanelModule,
+    MasterDetailModule,
+    MenuModule,
+    RangeSelectionModule,
+    RichSelectModule,
+    RowGroupingModule,
+    SetFilterModule,
+    MultiFilterModule,
+    ServerSideRowModelModule,
+    SideBarModule,
+    StatusBarModule,
+    ViewportRowModelModule,
+];
+
 /** @type {GridApi} **/
 let gridApi;
 /** @type {GridOptions} **/
@@ -52,13 +95,11 @@ const serverSideDataSource = {
 }
 
 customElements.define("my-ag-grid", class extends HTMLElement {
-
     connectedCallback() {
         const gridDiv = this.querySelector('#myGrid');
-        gridApi = agGrid.createGrid(gridDiv, gridOptions);
+        gridApi = createGrid(gridDiv, gridOptions, {modules: gridModules});
         gridApi.setGridOption('serverSideDatasource', serverSideDataSource);
     }
-
 });
 
 /**
