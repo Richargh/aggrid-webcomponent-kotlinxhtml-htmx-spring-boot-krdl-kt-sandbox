@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "ag-grid-enterprise": "/ag-grid-enterprise/ag-grid-enterprise.esm.min.js"
+  }
+}

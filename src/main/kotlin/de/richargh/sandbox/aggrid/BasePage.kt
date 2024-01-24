@@ -17,15 +17,7 @@ class BasePage {
                         title { +"AgGrid Sandbox" }
                         script(type = "importmap") {
                             unsafe {
-                                raw(
-                                    """
-                                {
-                                    "imports": {
-                                        "ag-grid-enterprise": "/ag-grid-enterprise/ag-grid-enterprise.esm.min.js"
-                                    }
-                                }
-                            """.trimIndent()
-                                )
+                                raw(javaClass.getResource("/public/importmap.json")!!.readText())
                             }
                         }
                     }
