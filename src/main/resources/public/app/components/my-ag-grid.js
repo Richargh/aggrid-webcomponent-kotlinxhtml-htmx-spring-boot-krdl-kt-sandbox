@@ -41,35 +41,6 @@ const gridModules = [
     ViewportRowModelModule,
 ];
 
-/** @type {GridApi} **/
-let gridApi;
-/** @type {GridOptions} **/
-const gridOptions = {
-    columnDefs: [
-        {field: 'athlete', minWidth: 220},
-        {field: 'country', minWidth: 200},
-        {field: 'year'},
-        {field: 'sport', minWidth: 200},
-        {field: 'gold'},
-        {field: 'silver'},
-        {field: 'bronze'},
-    ],
-
-    defaultColDef: {
-        flex: 1,
-        minWidth: 100,
-    },
-
-    pagination: true,
-    // allows the user to select the page size from a predefined list of page sizes
-    paginationPageSizeSelector: [5, 10, 20],
-    paginationPageSize: 5,
-    cacheBlockSize: 10, // how many rows are requested from server
-
-    rowModelType: 'serverSide',
-};
-
-
 /**
  * @param {Object} initialGridData
  * @param {string} url
@@ -124,6 +95,11 @@ function canUseInitial(initialGridData, params) {
 
 customElements.define("my-ag-grid", class extends HTMLElement {
     connectedCallback() {
+        const gridSrc = this.getAttribute('src');
+
+        const gridOptionsNode = this.querySelector('#gridOptions');
+        const gridOptions = JSON.parse(gridOptionsNode.innerHTML);
+
         const gridDataNode = this.querySelector('#gridData');
         const initialGridData = JSON.parse(gridDataNode.innerHTML);
 
@@ -132,8 +108,9 @@ customElements.define("my-ag-grid", class extends HTMLElement {
         gridDiv.className = "ag-theme-quartz ag-theme-custom"
         gridDiv.style.height = "100%";
         this.appendChild(gridDiv);
-        gridApi = createGrid(gridDiv, gridOptions, {modules: gridModules});
-        gridApi.setGridOption('serverSideDatasource', createServerSideDataSource(initialGridData, "/data"));
+        /** @type {GridApi} **/
+        const gridApi = createGrid(gridDiv, gridOptions, {modules: gridModules});
+        gridApi.setGridOption('serverSideDatasource', createServerSideDataSource(initialGridData, gridSrc));
     }
 });
 

@@ -38,3 +38,4 @@ out/
 
 ### Vendor ###
 src/main/resources/public/ag-grid-enterprise
+src/main/resources/public/htmx

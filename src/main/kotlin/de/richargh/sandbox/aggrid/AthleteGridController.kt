@@ -2,22 +2,29 @@ package de.richargh.sandbox.aggrid
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import de.richargh.sandbox.aggrid.components.myAgGrid
-import kotlinx.html.h1
-import kotlinx.html.script
-import kotlinx.html.unsafe
+import kotlinx.html.*
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
-class GridController(
+class AthleteGridController(
     private val mapper: ObjectMapper
 ) {
     @GetMapping("/")
     fun index() = html(BasePage.render {
-        h1 { +"Ag Grid Demo" }
+        h1 { +"Athlete Ag Grid Demo" }
+
+        div {
+            attributes["hx-boost"] = "true"
+            a(href = "/") { +"Athlete Grid   " }
+            a(href = "/food") { +"   Food Grid" }
+        }
+        br { }
 
         myAgGrid {
+            attributes["src"] = "/data"
+
             script(type = "application/json") {
                 attributes["id"] = "gridData"
                 unsafe {
@@ -28,6 +35,38 @@ class GridController(
                                 0,
                                 10,
                                 allAthletes.size
+                            )
+                        )
+                    )
+                }
+            }
+
+            script(type = "application/json") {
+                attributes["id"] = "gridOptions"
+                unsafe {
+                    raw(
+                        mapper.writeValueAsString(
+                            AgGridOptions(
+                                columnDefs = listOf(
+                                    AgColumDef(AthleteDto::athlete.name, minWidth = 220),
+                                    AgColumDef(AthleteDto::country.name, minWidth = 200),
+                                    AgColumDef(AthleteDto::year.name),
+                                    AgColumDef(AthleteDto::sport.name, minWidth = 200),
+                                    AgColumDef(AthleteDto::gold.name),
+                                    AgColumDef(AthleteDto::silver.name),
+                                    AgColumDef(AthleteDto::bronze.name),
+                                ),
+                                defaultColDef = AgDefaultColDef(
+                                    flex = 1,
+                                    minWidth = 100
+                                ),
+
+                                pagination = true,
+                                paginationPageSizeSelector = listOf(5, 10, 20),
+                                paginationPageSize = 5,
+                                cacheBlockSize = 10,
+
+                                rowModelType = "serverSide"
                             )
                         )
                     )

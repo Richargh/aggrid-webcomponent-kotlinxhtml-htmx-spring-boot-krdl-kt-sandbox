@@ -7,7 +7,7 @@ import org.springframework.context.support.beans
 class ApplicationTestContext : ApplicationContextInitializer<GenericApplicationContext> {
     override fun initialize(applicationContext: GenericApplicationContext) {
         beans {
-            bean<GridController>()
+            bean<AthleteGridController>()
         }.initialize(applicationContext)
     }
 

@@ -4,7 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dist": "npm run dist:aggrid",
+    "dist": "npm run dist:aggrid && npm run dist:htmx",
+    "dist:htmx": "cp node_modules/htmx.org/dist/htmx.min.js ../src/main/resources/public/htmx",
     "dist:aggrid": "npm run dist:aggrid:code && npm run dist:aggrid:style && npm run dist:aggrid:theme",
     "dist:aggrid:code": "cp node_modules/ag-grid-enterprise/dist/ag-grid-enterprise.esm.min.js ../src/main/resources/public/ag-grid-enterprise",
     "dist:aggrid:style": "cp node_modules/ag-grid-enterprise/styles/ag-grid.min.css ../src/main/resources/public/ag-grid-enterprise",
@@ -14,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ag-grid-enterprise": "^31.0.2"
+    "ag-grid-enterprise": "^31.0.2",
+    "htmx.org": "^1.9.10"
   }
 }

@@ -10,7 +10,8 @@ class Application
 fun main(args: Array<String>) {
 	runApplication<Application>(*args) {
 		addInitializers(beans {
-			bean<GridController>()
+			bean<AthleteGridController>()
+			bean<FoodGridController>()
 			bean<WebConfig>()
 		})
 	}

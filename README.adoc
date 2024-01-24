@@ -7,7 +7,9 @@
 ** link:https://www.ag-grid.com/javascript-data-grid/modules/#providing-modules-to-individual-grids[Individual Grid Modules]
 ** link:https://www.ag-grid.com/javascript-data-grid/global-style-customisation/[Theme Customization]
 ** Speedy initial load due to initial data in the html
+** Configuring grid via gridOptions in the html
 * AgGrid wrapped in a Web Component
+* Htmx Boost to test compatibility with Web Components
 * Kotlinx.Html
 * Spring Boot
 
