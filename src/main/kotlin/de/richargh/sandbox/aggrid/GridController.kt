@@ -1,25 +1,37 @@
 package de.richargh.sandbox.aggrid
 
-import de.richargh.sandbox.aggrid.components.div
+import com.fasterxml.jackson.databind.ObjectMapper
 import de.richargh.sandbox.aggrid.components.myAgGrid
 import kotlinx.html.h1
-import kotlinx.html.id
 import kotlinx.html.script
-import kotlinx.html.style
+import kotlinx.html.unsafe
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
-class GridController {
+class GridController(
+    private val mapper: ObjectMapper
+) {
     @GetMapping("/")
     fun index() = html(BasePage.render {
         h1 { +"Ag Grid Demo" }
 
         myAgGrid {
-            div(classes = "ag-theme-quartz ag-theme-custom") {
-                style = "height: 100%"
-                id = "myGrid"
+            script(type = "application/json") {
+                attributes["id"] = "gridData"
+                unsafe {
+                    raw(
+                        mapper.writeValueAsString(
+                            CollectionDto(
+                                allAthletes.subList(0, 10),
+                                0,
+                                10,
+                                allAthletes.size
+                            )
+                        )
+                    )
+                }
             }
         }
         script(type = "module", src = "/app/components/my-ag-grid.js") {}
@@ -29,6 +41,8 @@ class GridController {
     @GetMapping("/data")
     fun data(startRow: Int = 0, endRow: Int = 10) = CollectionDto(
         allAthletes.subList(startRow, endRow),
+        startRow,
+        endRow,
         allAthletes.size
     )
 }

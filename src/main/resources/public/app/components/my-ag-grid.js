@@ -69,36 +69,71 @@ const gridOptions = {
     rowModelType: 'serverSide',
 };
 
-/** @type {IServerSideDatasource} **/
-const serverSideDataSource = {
-    getRows: (params) => {
-        console.log('[Datasource] - rows requested by grid: ', params.request);
 
-        fetch('/data?' + new URLSearchParams({
-            startRow: params.request.startRow,
-            endRow: params.request.endRow,
-        }))
-            .then((response) => response.json())
-            .then(function (data) {
-                /** @type {LoadSuccessParams} **/
-                const successData = {
-                    rowData: data.rows,
-                    rowCount: data.total
-                };
-                params.success(successData);
-            })
-            .catch((error) => {
-                console.error(`Failed to fetch: ${error}`);
-                params.fail();
-            });
+/**
+ * @param {Object} initialGridData
+ * @param {string} url
+ * @returns {IServerSideDatasource}
+ **/
+function createServerSideDataSource(initialGridData, url) {
+    let isInitialLoad = true;
+
+    return {
+        getRows: (params) => {
+            if (isInitialLoad && canUseInitial(initialGridData, params)) {
+                console.log('[Datasource] - using initial grid Data: ', initialGridData);
+                isInitialLoad = false;
+                params.success({
+                    rowData: initialGridData.rows,
+                    rowCount: initialGridData.total
+                })
+                return;
+            }
+
+            console.log('[Datasource] - rows requested by grid: ', params.request);
+            fetch(url + '?' + new URLSearchParams({
+                startRow: params.request.startRow,
+                endRow: params.request.endRow,
+            }))
+                .then((response) => response.json())
+                .then(function (data) {
+                    /** @type {LoadSuccessParams} **/
+                    const successData = {
+                        rowData: data.rows,
+                        rowCount: data.total
+                    };
+                    params.success(successData);
+                })
+                .catch((error) => {
+                    console.error(`Failed to fetch: ${error}`);
+                    params.fail();
+                });
+        }
     }
+}
+
+/**
+ * @param {Object} initialGridData
+ * @param {IServerSideGetRowsParams} params
+ */
+function canUseInitial(initialGridData, params) {
+    return initialGridData != null
+        && initialGridData.startRow === params.request.startRow
+        && initialGridData.endRow === params.request.endRow
 }
 
 customElements.define("my-ag-grid", class extends HTMLElement {
     connectedCallback() {
-        const gridDiv = this.querySelector('#myGrid');
+        const gridDataNode = this.querySelector('#gridData');
+        const initialGridData = JSON.parse(gridDataNode.innerHTML);
+
+        const gridDiv = document.createElement("div");
+        gridDiv.id = "disGrid"
+        gridDiv.className = "ag-theme-quartz ag-theme-custom"
+        gridDiv.style.height = "100%";
+        this.appendChild(gridDiv);
         gridApi = createGrid(gridDiv, gridOptions, {modules: gridModules});
-        gridApi.setGridOption('serverSideDatasource', serverSideDataSource);
+        gridApi.setGridOption('serverSideDatasource', createServerSideDataSource(initialGridData, "/data"));
     }
 });
 

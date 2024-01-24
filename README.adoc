@@ -6,6 +6,7 @@
 ** link:https://www.ag-grid.com/javascript-data-grid/server-side-model/[Server-Side Row-Model]
 ** link:https://www.ag-grid.com/javascript-data-grid/modules/#providing-modules-to-individual-grids[Individual Grid Modules]
 ** link:https://www.ag-grid.com/javascript-data-grid/global-style-customisation/[Theme Customization]
+** Speedy initial load due to initial data in the html
 * AgGrid wrapped in a Web Component
 * Kotlinx.Html
 * Spring Boot

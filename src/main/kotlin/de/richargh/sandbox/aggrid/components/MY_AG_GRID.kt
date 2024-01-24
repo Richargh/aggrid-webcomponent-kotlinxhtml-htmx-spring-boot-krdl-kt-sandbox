@@ -12,7 +12,3 @@ class MY_AG_GRID(initialAttributes: Map<String, String>, consumer: TagConsumer<*
 @HtmlTagMarker
 inline fun FlowContent.myAgGrid(classes: String? = null, crossinline block: MY_AG_GRID.() -> Unit = {}): Unit =
     MY_AG_GRID(attributesMapOf("class", classes), consumer).visit(block)
-
-@HtmlTagMarker
-inline fun MY_AG_GRID.div(classes: String? = null, crossinline block: DIV.() -> Unit = {}): Unit =
-    DIV(attributesMapOf("class", classes), consumer).visit(block)
