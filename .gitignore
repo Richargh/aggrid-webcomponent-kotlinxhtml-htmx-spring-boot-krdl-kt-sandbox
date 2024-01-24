@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Vendor ###
+src/main/resources/public/ag-grid-enterprise
