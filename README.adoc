@@ -20,7 +20,7 @@
 
 == Usage
 
-* Build and move .js files to src/main/resources/public via `cd assets && npm ci && npm run build`
+* Build and move .js files to src/main/resources/public via `cd assets && npm ci && npm run dist`
 * Run server via `./gradlew bootRun` and open link:http://localhost:8080[localhost:8080].
 * Run tests via `./gradlew test`
 
